@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends MaterialApp {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Test',
       theme: ThemeData(primarySwatch: Colors.green),
       home: MainPage(),
+//      routes: <String, WidgetBuilder>{
+//        '/a': (BuildContext context) => SecondPage(),
+//      },
     );
   }
 }
@@ -31,7 +34,13 @@ class MainPageState extends State<MainPage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      title = "title${index}";
+      if (_selectedIndex == 0) {
+        title = "Home";
+      } else if (_selectedIndex == 1) {
+        title = "Business";
+      } else {
+        title = "School";
+      }
     });
   }
 
@@ -40,32 +49,32 @@ class MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: HomeAppBar(title),
       body: () {
-        if (_selectedIndex == 0) {
+//        if (_selectedIndex == 0) {
           return HomeBody();
-        } else if (_selectedIndex == 1) {
-          return BusinessBody();
-        } else {
-          return SchoolBody();
-        }
+//        } else if (_selectedIndex == 1) {
+//          return BusinessBody();
+//        } else {
+//          return SchoolBody();
+//        }
       }(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            title: Text('Business'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            title: Text('School'),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
+//      bottomNavigationBar: BottomNavigationBar(
+//        items: const <BottomNavigationBarItem>[
+//          BottomNavigationBarItem(
+//            icon: Icon(Icons.home),
+//            title: Text('Home'),
+//          ),
+//          BottomNavigationBarItem(
+//            icon: Icon(Icons.business),
+//            title: Text('Business'),
+//          ),
+//          BottomNavigationBarItem(
+//            icon: Icon(Icons.school),
+//            title: Text('School'),
+//          ),
+//        ],
+//        currentIndex: _selectedIndex,
+//        onTap: _onItemTapped,
+//      ),
     );
   }
 }
@@ -108,7 +117,7 @@ class SchoolBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Center(
-      child: Text("SchoolBody"),
+      child: Text("dianji"),
     );
   }
 }
