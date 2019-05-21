@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hellow_flutter/second.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends MaterialApp {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Test',
       theme: ThemeData(primarySwatch: Colors.green),
       home: MainPage(),
-//      routes: <String, WidgetBuilder>{
-//        '/a': (BuildContext context) => SecondPage(),
-//      },
     );
   }
 }
@@ -49,32 +47,32 @@ class MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: HomeAppBar(title),
       body: () {
-//        if (_selectedIndex == 0) {
+        if (_selectedIndex == 0) {
           return HomeBody();
-//        } else if (_selectedIndex == 1) {
-//          return BusinessBody();
-//        } else {
-//          return SchoolBody();
-//        }
+        } else if (_selectedIndex == 1) {
+          return BusinessBody();
+        } else {
+          return SchoolBody();
+        }
       }(),
-//      bottomNavigationBar: BottomNavigationBar(
-//        items: const <BottomNavigationBarItem>[
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.home),
-//            title: Text('Home'),
-//          ),
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.business),
-//            title: Text('Business'),
-//          ),
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.school),
-//            title: Text('School'),
-//          ),
-//        ],
-//        currentIndex: _selectedIndex,
-//        onTap: _onItemTapped,
-//      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            title: Text('Business'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            title: Text('School'),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
     );
   }
 }
@@ -98,17 +96,32 @@ class HomeAppBar extends AppBar {
 class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Center(
-      child: Text("HomeBody"),
-    );
+    return new Column(children: <Widget>[
+      Image(image: new AssetImage("images/img_girl.jpg")),
+      Image(image: new AssetImage("images/img_girl.jpg")),
+//      CachedNetworkImage(imageUrl: "")
+    ]);
   }
 }
 
 class BusinessBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Center(
-      child: Text("BusinessBody"),
+    return new ListView.builder(
+      itemCount: 128,
+      itemBuilder: (context, index) {
+        return new ListTile(
+          title: new GestureDetector(
+            child: new Text("这是第${index + 1}个"),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => new SecondPage("${index + 1}")));
+            },
+          ),
+        );
+      },
     );
   }
 }
@@ -116,8 +129,26 @@ class BusinessBody extends StatelessWidget {
 class SchoolBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Center(
-      child: Text("dianji"),
-    );
+    return new GridView.count(
+        crossAxisCount: 3, //3列
+        children: List.generate(40, (i) {
+          return Card(
+            child: new GestureDetector(
+              child: new Text("这是第${i + 1}个"),
+              onTap: (){
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => new SecondPage("${i + 1}")));
+              },
+            ),
+          );
+        }));
   }
+}
+
+class Todo {
+  String titles;
+
+  Todo(this.titles);
 }
